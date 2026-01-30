@@ -13,6 +13,7 @@ A Spring Boot application demonstrating Spring Cloud Gateway Server WebFlux with
 - [Testing](#testing)
 - [Troubleshooting](#troubleshooting)
 - [References](#references)
+- [Example Outputs](#example-outputs)
 
 ## 🎯 Overview
 
@@ -335,4 +336,146 @@ This project is for demonstration purposes.
 ---
 
 **Happy Routing! 🚀**
+
+## 📊 Example Outputs
+
+### Profile: doc
+
+```bash
+curl http://localhost:8080/actuator/gateway/routes
+```
+
+```json
+[]
+```
+
+### Profile: new
+
+```bash
+curl http://localhost:8080/actuator/gateway/routes
+```
+
+```json
+[
+  {
+    "predicate": "(RouteDefinitionRouteLocator$$Lambda/0x00000000844b8250 && After: 2017-01-20T17:42:47.789-07:00[America/Denver])",
+    "route_id": "after_route",
+    "filters": [],
+    "uri": "https://example.org:443",
+    "order": 0
+  },
+  {
+    "predicate": "(RouteDefinitionRouteLocator$$Lambda/0x00000000844b8250 && Before: 2025-12-31T23:59:59.999-07:00[America/Denver])",
+    "route_id": "before_route",
+    "filters": [],
+    "uri": "https://example.org:443",
+    "order": 0
+  },
+  {
+    "predicate": "(RouteDefinitionRouteLocator$$Lambda/0x00000000844b8250 && Between: 2017-01-20T17:42:47.789-07:00[America/Denver] and 2025-12-31T23:59:59.999-07:00[America/Denver])",
+    "route_id": "between_route",
+    "filters": [],
+    "uri": "https://example.org:443",
+    "order": 0
+  },
+  {
+    "predicate": "(RouteDefinitionRouteLocator$$Lambda/0x00000000844b8250 && Cookie: name=chocolate regexp=ch.p)",
+    "route_id": "cookie_route",
+    "filters": [],
+    "uri": "https://example.org:443",
+    "order": 0
+  },
+  {
+    "predicate": "(RouteDefinitionRouteLocator$$Lambda/0x00000000844b8250 && Header: X-Request-Id regexp=\\d+)",
+    "route_id": "header_route",
+    "filters": [],
+    "uri": "https://example.org:443",
+    "order": 0
+  },
+  {
+    "predicate": "(RouteDefinitionRouteLocator$$Lambda/0x00000000844b8250 && Hosts: [**.somehost.org, **.anotherhost.org])",
+    "route_id": "host_route",
+    "filters": [],
+    "uri": "https://example.org:443",
+    "order": 0
+  },
+  {
+    "predicate": "(RouteDefinitionRouteLocator$$Lambda/0x00000000844b8250 && Methods: [GET])",
+    "route_id": "method_get_route",
+    "filters": [],
+    "uri": "https://example.org:443",
+    "order": 0
+  },
+  {
+    "predicate": "(RouteDefinitionRouteLocator$$Lambda/0x00000000844b8250 && Methods: [POST])",
+    "route_id": "method_post_route",
+    "filters": [],
+    "uri": "https://example.org:443",
+    "order": 0
+  },
+  {
+    "predicate": "(RouteDefinitionRouteLocator$$Lambda/0x00000000844b8250 && Paths: [/red/{segment}, /blue/{segment}], match trailing slash: true)",
+    "route_id": "path_route",
+    "filters": [],
+    "uri": "https://example.org:443",
+    "order": 0
+  },
+  {
+    "predicate": "(RouteDefinitionRouteLocator$$Lambda/0x00000000844b8250 && Paths: [/foo/**], match trailing slash: true)",
+    "route_id": "path_wildcard_route",
+    "filters": [],
+    "uri": "https://example.org:443",
+    "order": 0
+  },
+  {
+    "predicate": "(RouteDefinitionRouteLocator$$Lambda/0x00000000844b8250 && Query: param=green regexp=null)",
+    "route_id": "query_route_simple",
+    "filters": [],
+    "uri": "https://example.org:443",
+    "order": 0
+  },
+  {
+    "predicate": "(RouteDefinitionRouteLocator$$Lambda/0x00000000844b8250 && Query: param=red regexp=gree.)",
+    "route_id": "query_route_regexp",
+    "filters": [],
+    "uri": "https://example.org:443",
+    "order": 0
+  },
+  {
+    "predicate": "(RouteDefinitionRouteLocator$$Lambda/0x00000000844b8250 && RemoteAddrs: [192.168.1.1/24])",
+    "route_id": "remoteaddr_route",
+    "filters": [],
+    "uri": "https://example.org:443",
+    "order": 0
+  },
+  {
+    "predicate": "(RouteDefinitionRouteLocator$$Lambda/0x00000000844b8250 && XForwardedRemoteAddrRoutePredicateFactory$$Lambda/0x00000000844c0238)",
+    "route_id": "xforwarded_remoteaddr_route",
+    "filters": [],
+    "uri": "https://example.org:443",
+    "order": 0
+  },
+  {
+    "predicate": "(RouteDefinitionRouteLocator$$Lambda/0x00000000844b8250 && Weight: group1 8)",
+    "route_id": "weight_high",
+    "filters": [],
+    "uri": "https://weighthigh.org:443",
+    "order": 0
+  },
+  {
+    "predicate": "(RouteDefinitionRouteLocator$$Lambda/0x00000000844b8250 && Weight: group1 2)",
+    "route_id": "weight_low",
+    "filters": [],
+    "uri": "https://weightlow.org:443",
+    "order": 0
+  },
+  {
+    "predicate": "((((RouteDefinitionRouteLocator$$Lambda/0x00000000844b8250 && Methods: [GET]) && Paths: [/api/**], match trailing slash: true) && Header: X-Request-Id regexp=\\d+) && Query: param=version regexp=v\\d+)",
+    "route_id": "combined_route",
+    "filters": [],
+    "uri": "https://example.org:443",
+    "order": 0
+  }
+]
+```
 
