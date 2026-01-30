@@ -1,0 +1,13 @@
+spring:
+  profiles:
+    active: doc
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus,gateway
+  endpoint:
+    gateway:
+      enabled: true

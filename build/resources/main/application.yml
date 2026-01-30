@@ -1,0 +1,157 @@
+spring:
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            # ============================================
+            # TIME-BASED PREDICATES
+            # ============================================
+            
+            # After Route Predicate - Matches requests after specified datetime
+            - id: after_route
+              uri: https://example.org
+              predicates:
+                - After=2017-01-20T17:42:47.789-07:00[America/Denver]
+            
+            # Before Route Predicate - Matches requests before specified datetime
+            - id: before_route
+              uri: https://example.org
+              predicates:
+                - Before=2025-12-31T23:59:59.999-07:00[America/Denver]
+            
+            # Between Route Predicate - Matches requests between two datetimes
+            - id: between_route
+              uri: https://example.org
+              predicates:
+                - Between=2017-01-20T17:42:47.789-07:00[America/Denver], 2025-12-31T23:59:59.999-07:00[America/Denver]
+            
+            # ============================================
+            # HEADER & COOKIE PREDICATES
+            # ============================================
+            
+            # Cookie Route Predicate - Matches requests with cookie name and regexp value
+            - id: cookie_route
+              uri: https://example.org
+              predicates:
+                - Cookie=chocolate, ch.p
+            
+            # Header Route Predicate - Matches requests with header name and regexp value
+            - id: header_route
+              uri: https://example.org
+              predicates:
+                - Header=X-Request-Id, \d+
+            
+            # ============================================
+            # HOST PREDICATE
+            # ============================================
+            
+            # Host Route Predicate - Matches requests based on Host header
+            - id: host_route
+              uri: https://example.org
+              predicates:
+                - Host=**.somehost.org,**.anotherhost.org
+            
+            # ============================================
+            # METHOD PREDICATE
+            # ============================================
+            
+            # Method Route Predicate - Matches HTTP methods (GET, POST, PUT, DELETE, etc.)
+            - id: method_get_route
+              uri: https://example.org
+              predicates:
+                - Method=GET
+            
+            - id: method_post_route
+              uri: https://example.org
+              predicates:
+                - Method=POST
+            
+            # ============================================
+            # PATH PREDICATES
+            # ============================================
+            
+            # Path Route Predicate - Matches request paths (supports Ant-style patterns)
+            - id: path_route
+              uri: https://example.org
+              predicates:
+                - Path=/red/{segment},/blue/{segment}
+            
+            # Path with wildcard
+            - id: path_wildcard_route
+              uri: https://example.org
+              predicates:
+                - Path=/foo/**
+            
+            # ============================================
+            # QUERY PREDICATE
+            # ============================================
+            
+            # Query Route Predicate - Matches query parameters
+            # Matches if request contains 'green' query parameter
+            - id: query_route_simple
+              uri: https://example.org
+              predicates:
+                - Query=green
+            
+            # Matches if request contains 'red' query parameter with value matching regexp
+            - id: query_route_regexp
+              uri: https://example.org
+              predicates:
+                - Query=red, gree.
+            
+            # ============================================
+            # REMOTE ADDRESS PREDICATES
+            # ============================================
+            
+            # RemoteAddr Route Predicate - Matches based on client IP (CIDR notation)
+            - id: remoteaddr_route
+              uri: https://example.org
+              predicates:
+                - RemoteAddr=192.168.1.1/24
+            
+            # XForwardedRemoteAddr Route Predicate - Matches based on X-Forwarded-For header
+            - id: xforwarded_remoteaddr_route
+              uri: https://example.org
+              predicates:
+                - XForwardedRemoteAddr=192.168.1.1/24
+            
+            # ============================================
+            # WEIGHT PREDICATE
+            # ============================================
+            
+            # Weight Route Predicate - Traffic splitting/weighted routing
+            # ~80% of traffic goes to weighthigh.org
+            - id: weight_high
+              uri: https://weighthigh.org
+              predicates:
+                - Weight=group1, 8
+            
+            # ~20% of traffic goes to weightlow.org
+            - id: weight_low
+              uri: https://weightlow.org
+              predicates:
+                - Weight=group1, 2
+            
+            # ============================================
+            # COMBINED PREDICATES (Multiple conditions)
+            # ============================================
+            
+            # Example: Combining multiple predicates (logical AND)
+            - id: combined_route
+              uri: https://example.org
+              predicates:
+                - Method=GET
+                - Path=/api/**
+                - Header=X-Request-Id, \d+
+                - Query=version, v\d+
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus,gateway
+  endpoint:
+    gateway:
+      enabled: true
